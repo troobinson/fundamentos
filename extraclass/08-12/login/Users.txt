@@ -1,0 +1,5 @@
+Nombre de Usuario;Contraseña
+trobin;r12
+carlos;loscar
+ayuda;necesitopasarfundamentos
+Tarantino;47p
