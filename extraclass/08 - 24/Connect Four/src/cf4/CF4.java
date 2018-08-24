@@ -49,7 +49,7 @@ public class CF4 extends Application {
     private static final String Tablero[][] = new String[6][7];
     private Ficha[][] grid = new Ficha[Columnas][Filas];
     boolean player1move = true;
-    private Label label = new Label("Player turn");
+    /*private Label label = new Label("Player turn");*/
     private Pane ficharoot = new Pane();
 
     private Parent createContent() {
@@ -58,16 +58,12 @@ public class CF4 extends Application {
         pane.getChildren().add(gridShape);
         pane.getChildren().addAll(makeColumns());
         pane.getChildren().add(ficharoot);
-        /*
-        *
-        *
-        HBox box = new HBox(10);
-        TextField colField = new TextField();*/
+       
 
         return pane;
     }
 
-    private Shape crearTablero() {
+    private Shape crearTablero() { //A traves de una forma especificada (en este caso, un rectangulo, se crea un tablero)
         Shape forma = new Rectangle((Columnas + 1) * Tamaño, (Filas + 1) * Tamaño);
 
         for (int i = 0; i < Filas; i++) {
@@ -92,7 +88,7 @@ public class CF4 extends Application {
             Rectangle rectangulo = new Rectangle((Tamaño), (Filas + 1) * Tamaño);
             rectangulo.setTranslateX(i * (Tamaño + 5) + (Tamaño / 4));
             rectangulo.setFill(Color.TRANSPARENT);
-            rectangulo.setOnMouseEntered(e -> rectangulo.setFill(player1move ? Color.rgb(255, 0, 0, 0.25) : Color.rgb(0, 0, 0, 0.25)));
+            rectangulo.setOnMouseEntered(e -> rectangulo.setFill(player1move ? Color.rgb(255, 0, 0, 0.25) : Color.rgb(0, 0, 255, 0.25))); //Una preview que indica el turno del siguiente jugador (ROJO O AZUL)
             rectangulo.setOnMouseExited(e -> rectangulo.setFill(Color.TRANSPARENT));
 
             int columna = i;
@@ -145,6 +141,8 @@ public class CF4 extends Application {
         List <Point2D> diagonal1 = IntStream.rangeClosed(0, 6).mapToObj(i -> SuperiorIzq.add(i, i)).collect(Collectors.toList());
         Point2D InferiorIzq = new Point2D(columna -3, fila + 3);
         List <Point2D> diagonal2 = IntStream.rangeClosed(0, 6).mapToObj(i -> SuperiorIzq.add(i, -i)).collect(Collectors.toList());
+        /*Point2D SuperiorDer = new Point2D(columna + 3, fila - 3);
+        List <Point2D> diagonal3 = IntStream.rangeClosed(0, 6).mapToObj(i -> SuperiorDer.add(-i, -i)).collect(Collectors.toList());*/
         
         return checkRange(vertical) || checkRange(horizontal) || checkRange(diagonal1) || checkRange(diagonal2);
     }
@@ -152,11 +150,11 @@ public class CF4 extends Application {
     private boolean findelJuego() { //Envia el mensaje de fin del juego, avisando cual jugador gano
         Alert msggameover = new Alert(Alert.AlertType.INFORMATION);
         msggameover.setTitle("FIN DEL JUEGO");
-        msggameover.setHeaderText("¡Tenemos un ganador! " + " El jugador "+(player1move ? "1(FICHA ROJA) ":"2(FICHA NEGRA) ") +" Ha ganado la partida");
+        msggameover.setHeaderText("¡Tenemos un ganador! " + " El jugador "+(player1move ? "1(FICHA ROJA) ":"2(FICHA AZUL) ") +" Ha ganado la partida");
         msggameover.showAndWait(); //Espera a que el usuario clickee en aceptar, y cierra el programa
     
         
-        System.out.println("¡Tenemos un ganador! " + " El jugador "+(player1move ? "1(FICHA ROJA) ":"2(FICHA NEGRA) ") +" Ha ganado la partida");
+        System.out.println("¡Tenemos un ganador! " + " El jugador "+(player1move ? "1(FICHA ROJA) ":"2(FICHA AZUL) ") +" Ha ganado la partida");
         return true;
     }
     
@@ -191,7 +189,7 @@ public class CF4 extends Application {
         private final boolean red;
 
         public Ficha(boolean red) {
-            super(Tamaño / 2, red ? Color.RED : Color.BLACK);
+            super(Tamaño / 2, red ? Color.RED : Color.BLUE);
             this.red = red;
             setCenterX(Tamaño / 2);
             setCenterY(Tamaño / 2);
